@@ -5,9 +5,11 @@
       <button @click="sendMessage('ENG 1 1')">上</button>
       <div class="horizontal-buttons">
         <button @click="sendMessage('ENG -1 1')">左</button>
-        <button @click="sendMessage('ENG -1 -1')">下</button>
+        <button @click="sendMessage('ENG 0 0')">停止</button>
         <button @click="sendMessage('ENG 1 -1')">右</button>
       </div>
+      <button @click="sendMessage('ENG -1 -1')">下</button>
+
     </div>
   </div>
 </template>
@@ -51,6 +53,13 @@ export default {
   data() {
     return {
       socket: null,
+      controlMap: {
+        'ArrowLeft': 'ENG -1 1',
+        'ArrowRight': 'ENG 1 -1',
+        'ArrowUp': 'ENG 1 1',
+        'ArrowDown': 'ENG -1 -1',
+        ' ': 'ENG 0 0'
+      }
     };
   },
   mounted() {
@@ -83,21 +92,8 @@ export default {
   },
   methods: {
     handleKeydown(e) {
-      switch (e.key) {
-        case 'ArrowLeft':
-          this.sendMessage('ENG -1 1')
-          break;
-        case 'ArrowRight':
-          this.sendMessage('ENG 1 -1')
-          break;
-        case 'ArrowUp':
-          this.sendMessage('ENG 1 1')
-          break;
-        case 'ArrowDown':
-          this.sendMessage('ENG -1 -1');
-          break;
-      }
-    },
+      this.sendMessage(this.controlMap[e.key]);
+    },  
     sendMessage(message) {
       if (this.socket && this.socket.readyState === WebSocket.OPEN) {
         this.socket.send(message);
