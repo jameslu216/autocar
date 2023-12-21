@@ -58,7 +58,7 @@ export default {
     window.addEventListener('keydown', this.handleKeydown);
   },
   created() {
-    this.socket = new WebSocket('ws://localhost:8765');
+    this.socket = new WebSocket('ws://'+window.location.hostname+':8765');
 
     this.socket.onopen = () => {
       console.log('连接成功');
