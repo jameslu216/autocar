@@ -1,23 +1,44 @@
 <template>
-  <div>
+  <div class="container">
     <video ref="videoElement" width="720" controls muted></video>
-    <div class="direction-buttons">
-      <button @click="sendMessage('ENG 1 1')">上</button>
+    <div class="panel">
+      <h3 class="panel-title">Control Panel</h3>
+      <button @click="sendMessage('ENG 1 1')" class="arrow up-arrow"></button>
       <div class="horizontal-buttons">
-        <button @click="sendMessage('ENG -1 1')">左</button>
-        <button @click="sendMessage('ENG 0 0')">停止</button>
-        <button @click="sendMessage('ENG 1 -1')">右</button>
+        <button @click="sendMessage('ENG -1 1')" class="arrow left-arrow"></button>
+        <button @click="sendMessage('ENG 0 0')" class="stop-button"></button>
+        <button @click="sendMessage('ENG 1 -1')" class="arrow right-arrow"></button>
       </div>
-      <button @click="sendMessage('ENG -1 -1')">下</button>
-
+      <button @click="sendMessage('ENG -1 -1')" class="arrow down-arrow"></button>
+    </div>
+    <div class="panel">
+      <h3 class="panel-title">Sensor Data</h3>
+      <div>溫度:0</div>
     </div>
   </div>
 </template>
 <style scoped>
-.direction-buttons {
+.container {
+  width: 720px; /* 视频和控制面板的宽度 */
+  margin: auto; /* 居中显示 */
+}
+.panel-title {
+  color: #333; /* 标题颜色 */
+  margin-bottom: 20px; /* 在标题和按钮之间添加一些空间 */
+  font-size: 1.5em; /* 标题的大小 */
+  margin-top: 5px;
+}
+.panel {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 3px solid #333; /* 控制面板边框 */
+  padding: 20px; /* 控制面板内边距 */
+  border-radius: 15px; /* 控制面板圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 控制面板阴影效果 */
+  background: #f7f7f7; /* 控制面板背景颜色 */
+  margin-top: 20px; /* 和视频元素的间距 */
+  box-sizing: border-box; /* 包括padding和border在内的总宽度 */
 }
 
 .horizontal-buttons {
@@ -26,18 +47,68 @@
 
 button {
   margin: 5px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
+.arrow {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: solid black;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 3px;
+  cursor: pointer;
+  outline: none;
+}
 
-/* 響應式設計 */
+button:focus {
+  outline: none;
+}
+
+.up-arrow {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down-arrow {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.left-arrow {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.right-arrow {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.stop-button {
+  position: relative;
+  background-color: #3498db; /* 按钮背景颜色 */
+  display: block;
+  border-radius: 15%; /* 轻微圆角的正方形 */
+}
+
+.stop-sign {
+  width: 30%; /* 正方形大小相对于按钮的百分比 */
+  height: 30%; /* 正方形大小相对于按钮的百分比 */
+  background-color: black; /* 正方形颜色 */
+  display: block;
+  border-radius: 15%; /* 轻微圆角的正方形 */
+}
+
 @media (max-width: 600px) {
   button {
-    padding: 15px 25px;
-    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-width: 0 6px 6px 0;
   }
 }
 </style>
