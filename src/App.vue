@@ -13,7 +13,10 @@
     </div>
     <div class="panel">
       <h3 class="panel-title">Sensor Data</h3>
-      <div>溫度:0</div>
+      <div class="sensor-data">溫度<span class="temp-icon">&#x1F321;</span>: {{temperature}}</div>
+      <div class="sensor-data">濕度<span class="humidity-icon">&#x1F4A7;</span>: {{humidity}}</div>
+      <div class="sensor-data">GPS定位: {{latitude}} N , {{longitude}} E</div>
+      <div class="sensor-data">是否偵測到熱源: {{PIR}}</div>
     </div>
   </div>
 </template>
@@ -96,12 +99,18 @@ button:focus {
   border-radius: 15%; /* 轻微圆角的正方形 */
 }
 
-.stop-sign {
-  width: 30%; /* 正方形大小相对于按钮的百分比 */
-  height: 30%; /* 正方形大小相对于按钮的百分比 */
-  background-color: black; /* 正方形颜色 */
-  display: block;
-  border-radius: 15%; /* 轻微圆角的正方形 */
+.sensor-data {
+  margin-bottom: 5px; /* 在标题和按钮之间添加一些空间 */
+  font-size: 1.2em; /* 标题的大小 */
+  font-weight: bold;
+}
+
+.sensor-data .temp-icon {
+  color: red; /* 或者你想要的任何颜色 */
+}
+
+.sensor-data .humidity-icon {
+  color: blue; /* 水滴图标的颜色，你可以根据需要更改 */
 }
 
 @media (max-width: 600px) {
@@ -130,7 +139,12 @@ export default {
         'ArrowUp': 'ENG 1 1',
         'ArrowDown': 'ENG -1 -1',
         ' ': 'ENG 0 0'
-      }
+      },
+      temperature: 0,
+      humidity: 0,
+      latitude: 24.9,
+      longitude: 121.1,
+      PIR: "否"
     };
   },
   mounted() {
@@ -146,6 +160,9 @@ export default {
 
     this.socket.onmessage = (event) => {
       console.log('收到消息:', event.data);
+      this.temperature = event.data['TEMPERATURE'];
+      this.humidity = event.data['HUMIDITY'];
+      this.PIR = (event.data['VAL'] == 1)? "是":"否";
       // 处理收到的数据
     };
 
