@@ -3,47 +3,66 @@
     <video ref="videoElement" width="720" controls muted></video>
     <div class="panel">
       <h3 class="panel-title">Control Panel</h3>
-      <button @click="sendMessage('ENG 1 1')" :class="{'arrow': true, 'up-arrow': true, 'active-arrow': activeDirection === 'ArrowUp'}"></button>
+      <button @click="sendMessage('ENG 1 1')"
+        :class="{ 'arrow': true, 'up-arrow': true, 'active-arrow': activeDirection === 'ArrowUp' }"></button>
       <div class="horizontal-buttons">
-        <button @click="sendMessage('ENG -1 1')" :class="{'arrow': true, 'left-arrow': true, 'active-arrow': activeDirection === 'ArrowLeft'}"></button>
-        <button @click="sendMessage('ENG 0 0')" :class="{'stop-button': true, 'active-space': activeDirection === ' '}"></button>
-        <button @click="sendMessage('ENG 1 -1')" :class="{'arrow': true, 'right-arrow': true, 'active-arrow': activeDirection === 'ArrowRight'}"></button>
+        <button @click="sendMessage('ENG -1 1')"
+          :class="{ 'arrow': true, 'left-arrow': true, 'active-arrow': activeDirection === 'ArrowLeft' }"></button>
+        <button @click="sendMessage('ENG 0 0')"
+          :class="{ 'stop-button': true, 'active-space': activeDirection === ' ' }"></button>
+        <button @click="sendMessage('ENG 1 -1')"
+          :class="{ 'arrow': true, 'right-arrow': true, 'active-arrow': activeDirection === 'ArrowRight' }"></button>
       </div>
-      <button @click="sendMessage('ENG -1 -1')" :class="{'arrow': true, 'down-arrow': true, 'active-arrow': activeDirection === 'ArrowDown'}"></button>
+      <button @click="sendMessage('ENG -1 -1')"
+        :class="{ 'arrow': true, 'down-arrow': true, 'active-arrow': activeDirection === 'ArrowDown' }"></button>
     </div>
     <div class="panel">
       <h3 class="panel-title">Sensor Data</h3>
-      <div class="sensor-data">溫度<span class="temp-icon">&#x1F321;</span>: {{temperature}}</div>
-      <div class="sensor-data">濕度<span class="humidity-icon">&#x1F4A7;</span>: {{humidity}}</div>
-      <div class="sensor-data">環境煙霧量<span class="smoke-icon">&#x2601;</span>: {{smoke}}</div>
-      <div class="sensor-data">GPS定位: {{latitude}} N , {{longitude}} E</div>
-      <div class="sensor-data">與前方障礙物的距離: {{distance}}</div>
-      <div class="sensor-data">是否偵測到熱源: {{PIR}}</div>
+      <div class="sensor-data">溫度<span class="temp-icon">&#x1F321;</span>: {{ temperature }}</div>
+      <div class="sensor-data">濕度<span class="humidity-icon">&#x1F4A7;</span>: {{ humidity }}</div>
+      <div class="sensor-data">環境煙霧量<span class="smoke-icon">&#x2601;</span>: {{ smoke }}</div>
+      <div class="sensor-data">GPS定位: {{ latitude }} N , {{ longitude }} E</div>
+      <div class="sensor-data">與前方障礙物的距離: {{ distance }}</div>
+      <div class="sensor-data">是否偵測到熱源: {{ PIR }}</div>
     </div>
   </div>
 </template>
 <style scoped>
 .container {
-  width: 720px; /* 视频和控制面板的宽度 */
-  margin: auto; /* 居中显示 */
+  width: 720px;
+  /* 视频和控制面板的宽度 */
+  margin: auto;
+  /* 居中显示 */
 }
+
 .panel-title {
-  color: #333; /* 标题颜色 */
-  margin-bottom: 20px; /* 在标题和按钮之间添加一些空间 */
-  font-size: 1.5em; /* 标题的大小 */
+  color: #333;
+  /* 标题颜色 */
+  margin-bottom: 20px;
+  /* 在标题和按钮之间添加一些空间 */
+  font-size: 1.5em;
+  /* 标题的大小 */
   margin-top: 5px;
 }
+
 .panel {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 3px solid #333; /* 控制面板边框 */
-  padding: 20px; /* 控制面板内边距 */
-  border-radius: 15px; /* 控制面板圆角 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 控制面板阴影效果 */
-  background: #f7f7f7; /* 控制面板背景颜色 */
-  margin-top: 20px; /* 和视频元素的间距 */
-  box-sizing: border-box; /* 包括padding和border在内的总宽度 */
+  border: 3px solid #333;
+  /* 控制面板边框 */
+  padding: 20px;
+  /* 控制面板内边距 */
+  border-radius: 15px;
+  /* 控制面板圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* 控制面板阴影效果 */
+  background: #f7f7f7;
+  /* 控制面板背景颜色 */
+  margin-top: 20px;
+  /* 和视频元素的间距 */
+  box-sizing: border-box;
+  /* 包括padding和border在内的总宽度 */
 }
 
 .horizontal-buttons {
@@ -58,6 +77,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
 .arrow {
   width: 30px;
   height: 30px;
@@ -96,35 +116,42 @@ button:focus {
 
 .stop-button {
   position: relative;
-  background-color: #3498db; /* 按钮背景颜色 */
+  background-color: #3498db;
+  /* 按钮背景颜色 */
   display: block;
-  border-radius: 15%; /* 轻微圆角的正方形 */
+  border-radius: 15%;
+  /* 轻微圆角的正方形 */
 }
 
 .sensor-data {
-  margin-bottom: 5px; /* 在标题和按钮之间添加一些空间 */
-  font-size: 1.2em; /* 标题的大小 */
+  margin-bottom: 5px;
+  /* 在标题和按钮之间添加一些空间 */
+  font-size: 1.2em;
+  /* 标题的大小 */
   font-weight: bold;
 }
 
 .sensor-data .temp-icon {
-  color: red; /* 溫度計顏色 */
+  color: red;
+  /* 溫度計顏色 */
 }
 
 .sensor-data .humidity-icon {
-  color: blue; /* 水滴图标的颜色 */
+  color: blue;
+  /* 水滴图标的颜色 */
 }
 
 .sensor-data .smoke-icon {
-  color: gray; /* 为烟雾图标设置颜色 */
+  color: gray;
+  /* 为烟雾图标设置颜色 */
 }
 
 .active-arrow {
-  border-color: red; 
+  border-color: red;
 }
 
 .active-space {
-  background-color: red; 
+  background-color: red;
 }
 
 @media (max-width: 600px) {
@@ -170,7 +197,7 @@ export default {
     window.addEventListener('keyup', this.handleKeyup);
   },
   created() {
-    this.socket = new WebSocket('ws://'+window.location.hostname+':8765');
+    this.socket = new WebSocket('ws://140.115.54.79:8765');
 
     this.socket.onopen = () => {
       console.log('连接成功');
@@ -179,20 +206,20 @@ export default {
     this.socket.onmessage = (event) => {
       console.log('收到消息:', event.data);
       var datas = event.data.split(' ');
-      if(datas[0] == 'TEMP'){
+      if (datas[0] == 'TEMP') {
         this.temperature = datas[1];
         this.humidity = datas[3];
-      }else if(datas[0] == 'PIR'){
-        this.PIR = (datas[1] == 1)? "是":"否";
-      }else if(datas[0] == 'GPS'){
+      } else if (datas[0] == 'PIR') {
+        this.PIR = (datas[1] == 1) ? "是" : "否";
+      } else if (datas[0] == 'GPS') {
         this.latitude = datas[1];
         this.longitude = datas[2];
-      }else if(datas[0] == 'DIST'){
+      } else if (datas[0] == 'DIST') {
         this.distance = datas[1];
-      }else if(datas[0] == 'SMOKE'){
+      } else if (datas[0] == 'SMOKE') {
         this.smoke = datas[1];
       }
-      
+
       // 处理收到的数据
     };
 
@@ -215,8 +242,8 @@ export default {
       this.sendMessage(this.controlMap[e.key]);
     },
     handleKeyup() {
-    this.activeDirection = null;
-    },  
+      this.activeDirection = null;
+    },
     sendMessage(message) {
       if (this.socket && this.socket.readyState === WebSocket.OPEN) {
         this.socket.send(message);
@@ -262,18 +289,35 @@ export default {
           // 使用 HLS URL
           const video = this.$refs.videoElement;
           if (Hls.isSupported()) {
-            const hls = new Hls();
+            const hls = new Hls({
+              maxBufferLength: 30,
+              maxMaxBufferLength: 600,
+              liveSyncDurationCount: 5,
+              liveMaxLatencyDurationCount: 15
+            });
             hls.loadSource(urlData.HLSStreamingSessionURL);
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, function () {
-              video.play();
+              if (!video.playing) {
+                video.play();
+              }
             });
           } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = urlData.HLSStreamingSessionURL;
             video.addEventListener('canplay', function () {
-              video.play();
+              if (!video.playing) {
+                video.play();
+              }
             });
           }
         });
+      });
+
+      // 检查视频是否正在播放的辅助函数
+      Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+        get: function () {
+          return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+        }
       });
     }
   }
