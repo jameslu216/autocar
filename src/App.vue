@@ -3,13 +3,13 @@
     <video ref="videoElement" width="720" controls muted></video>
     <div class="panel">
       <h3 class="panel-title">Control Panel</h3>
-      <button @click="sendMessage('ENG 1 1')" class="arrow up-arrow"></button>
+      <button @click="sendMessage('ENG 1 1')" :class="{'arrow': true, 'up-arrow': true, 'active-arrow': activeDirection === 'ArrowUp'}"></button>
       <div class="horizontal-buttons">
-        <button @click="sendMessage('ENG -1 1')" class="arrow left-arrow"></button>
-        <button @click="sendMessage('ENG 0 0')" class="stop-button"></button>
-        <button @click="sendMessage('ENG 1 -1')" class="arrow right-arrow"></button>
+        <button @click="sendMessage('ENG -1 1')" :class="{'arrow': true, 'left-arrow': true, 'active-arrow': activeDirection === 'ArrowLeft'}"></button>
+        <button @click="sendMessage('ENG 0 0')" :class="{'stop-button': true, 'active-space': activeDirection === ' '}"></button>
+        <button @click="sendMessage('ENG 1 -1')" :class="{'arrow': true, 'right-arrow': true, 'active-arrow': activeDirection === 'ArrowRight'}"></button>
       </div>
-      <button @click="sendMessage('ENG -1 -1')" class="arrow down-arrow"></button>
+      <button @click="sendMessage('ENG -1 -1')" :class="{'arrow': true, 'down-arrow': true, 'active-arrow': activeDirection === 'ArrowDown'}"></button>
     </div>
     <div class="panel">
       <h3 class="panel-title">Sensor Data</h3>
@@ -106,11 +106,19 @@ button:focus {
 }
 
 .sensor-data .temp-icon {
-  color: red; /* 或者你想要的任何颜色 */
+  color: red; /* 溫度計顏色 */
 }
 
 .sensor-data .humidity-icon {
-  color: blue; /* 水滴图标的颜色，你可以根据需要更改 */
+  color: blue; /* 水滴图标的颜色 */
+}
+
+.active-arrow {
+  border-color: red; 
+}
+
+.active-space {
+  background-color: red; 
 }
 
 @media (max-width: 600px) {
@@ -144,12 +152,14 @@ export default {
       humidity: 0,
       latitude: 24.9,
       longitude: 121.1,
-      PIR: "否"
+      PIR: "否",
+      activeDirection: null,
     };
   },
   mounted() {
     this.setupKinesisVideo();
     window.addEventListener('keydown', this.handleKeydown);
+    window.addEventListener('keyup', this.handleKeyup);
   },
   created() {
     this.socket = new WebSocket('ws://'+window.location.hostname+':8765');
@@ -177,10 +187,15 @@ export default {
   unmounted() {
     this.socket.close();
     window.removeEventListener('keydown', this.handleKeydown);
+    window.removeEventListener('keyup', this.handleKeyup);
   },
   methods: {
     handleKeydown(e) {
+      this.activeDirection = e.key;
       this.sendMessage(this.controlMap[e.key]);
+    },
+    handleKeyup() {
+    this.activeDirection = null;
     },  
     sendMessage(message) {
       if (this.socket && this.socket.readyState === WebSocket.OPEN) {
