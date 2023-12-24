@@ -15,7 +15,9 @@
       <h3 class="panel-title">Sensor Data</h3>
       <div class="sensor-data">溫度<span class="temp-icon">&#x1F321;</span>: {{temperature}}</div>
       <div class="sensor-data">濕度<span class="humidity-icon">&#x1F4A7;</span>: {{humidity}}</div>
+      <div class="sensor-data">環境煙霧量<span class="smoke-icon">&#x2601;</span>: {{smoke}}</div>
       <div class="sensor-data">GPS定位: {{latitude}} N , {{longitude}} E</div>
+      <div class="sensor-data">與前方障礙物的距離: {{distance}}</div>
       <div class="sensor-data">是否偵測到熱源: {{PIR}}</div>
     </div>
   </div>
@@ -113,6 +115,10 @@ button:focus {
   color: blue; /* 水滴图标的颜色 */
 }
 
+.sensor-data .smoke-icon {
+  color: gray; /* 为烟雾图标设置颜色 */
+}
+
 .active-arrow {
   border-color: red; 
 }
@@ -153,6 +159,8 @@ export default {
       latitude: 24.9,
       longitude: 121.1,
       PIR: "否",
+      distance: 0,
+      smoke: 0,
       activeDirection: null,
     };
   },
@@ -170,9 +178,21 @@ export default {
 
     this.socket.onmessage = (event) => {
       console.log('收到消息:', event.data);
-      this.temperature = event.data['TEMPERATURE'];
-      this.humidity = event.data['HUMIDITY'];
-      this.PIR = (event.data['VAL'] == 1)? "是":"否";
+      var datas = event.data.split(' ');
+      if(datas[0] == 'TEMP'){
+        this.temperature = datas[1];
+        this.humidity = datas[3];
+      }else if(datas[0] == 'PIR'){
+        this.PIR = (datas[1] == 1)? "是":"否";
+      }else if(datas[0] == 'GPS'){
+        this.latitude = datas[1];
+        this.longitude = datas[2];
+      }else if(datas[0] == 'DIST'){
+        this.distance = datas[1];
+      }else if(datas[0] == 'SMOKE'){
+        this.smoke = datas[1];
+      }
+      
       // 处理收到的数据
     };
 
