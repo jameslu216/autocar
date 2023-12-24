@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-            <video ref="videoElement" width="720" controls muted></video>
-            <router-link to="/demopage">Go to Demo Page</router-link>
+  <div class="container">
+    <router-link to="/demopage" target="_blank" class="router-link-button">Go to Demo Page</router-link>
+    <video ref="videoElement" width="720" controls muted></video>
     <div class="panel">
         <h3 class="panel-title">Control Panel</h3>
         <button @click="sendMessage('ENG 1 1')"
@@ -34,6 +34,7 @@
     /* 视频和控制面板的宽度 */
     margin: auto;
     /* 居中显示 */
+    text-align: right;
   }
   
   .panel-title {
@@ -94,7 +95,6 @@
   button:focus {
     outline: none;
   }
-  
   .up-arrow {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
@@ -154,6 +154,24 @@
   .active-space {
     background-color: red;
   }
+
+  .router-link-button {
+  display: inline-block;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: rgb(177, 173, 173);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.router-link-button:hover {
+  background-color: rgb(207, 202, 202);
+}
   
   @media (max-width: 600px) {
     button {
@@ -314,12 +332,14 @@
           });
         });
   
-        // 检查视频是否正在播放的辅助函数
-        Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
-          get: function () {
-            return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
-          }
-        });
+        // 仅在属性不存在时定义 playing 属性
+        if (!Object.prototype.hasOwnProperty.call(HTMLMediaElement.prototype, 'playing')) {
+          Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+            get: function() {
+              return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+            }
+          });
+        }
       }
     }
   };

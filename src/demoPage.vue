@@ -18,20 +18,16 @@
 <style>
 .video-text-container {
     display: flex;
-    align-items: flex-start;
-    /* 使用 flex-start 替代 start */
+    flex-direction: column; /* 子元素垂直堆叠 */
+    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中子元素 */
     gap: 20px;
-}
-
-.video-container {
-    /* 你可以添加一些特定于视频的样式，如宽度、高度等 */
+    margin: auto;
 }
 
 .text-container {
-    /* 样式用于格式化旁边的文本 */
     width: 300px;
-    /* 或根据需要调整 */
-    /* 其他样式，比如字体大小、行高等 */
+    text-align: center; /* 文本居中 */
     font-size: 50px;
 }
 </style>
