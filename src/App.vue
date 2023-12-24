@@ -148,8 +148,8 @@ export default {
     return {
       socket: null,
       controlMap: {
-        'ArrowLeft': 'ENG -1 1',
-        'ArrowRight': 'ENG 1 -1',
+        'ArrowLeft': 'ENG 1 -1',
+        'ArrowRight': 'ENG -1 1',
         'ArrowUp': 'ENG 1 1',
         'ArrowDown': 'ENG -1 -1',
         ' ': 'ENG 0 0'
